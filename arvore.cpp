@@ -26,9 +26,9 @@ int arv_vazia(arv *tree){
 void arv_print (arv *tree){
 	printf("(");
 	if (!arv_vazia(tree)){
-		printf("%i", tree->dado);
 		arv_print(tree->sesq);
 		arv_print(tree->sdir);
+		printf("%i", tree->dado);
 	}
 	printf(")");
 }
