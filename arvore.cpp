@@ -1,50 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct arvore{
+typedef struct BodyTree
+{
 	int dado;
-	struct arvore *sesq;
-	struct arvore *sdir;
-}arv;
+	struct BodyTree *son;
+	struct BodyTree *brother;
+}Tree;
 
-arv* arv_criarvazia(){
+int treeEmpyt(Tree *arv)
+{
+	return arv == NULL;
+}
+
+Tree* makeTree(int dado, Tree *son, Tree *brother)
+{
+	Tree *arv = (Tree*)malloc(sizeof(Tree));
+	arv->dado =  dado;
+	arv->son = son;
+	arv->brother = brother;
+	return arv;
+}
+
+Tree* mkTreeEmpyt()
+{
 	return NULL;
 }
 
-arv* arv_criar(int dado, arv *sdir, arv *sesq){
-	arv* tree= (arv*)malloc(sizeof(arv));
-	tree->dado =  dado;
-	tree->sesq = sesq;
-	tree->sdir = sdir;
-	return tree;
+void addSon(int dado, Tree *arv)
+{
+	Tree *carv;
+	carv = arv;
+	if (treeEmpyt(carv->son))
+	{
+		carv->son = makeTree(dado, mkTreeEmpyt(), mkTreeEmpyt());
+		arv = carv;
+
+	}else
+	{	
+		
+		addSon(dado, carv->son->brother);
+		arv = carv;
+	}
 }
 
-int arv_vazia(arv *tree){
-	return tree == NULL;
-}
-
-void arv_print (arv *tree){
+void printTree (Tree *tree)
+{
 	printf("(");
-	if (!arv_vazia(tree)){
-		arv_print(tree->sesq);
-		arv_print(tree->sdir);
+	if (!treeEmpyt(tree))
+	{
+		printTree(tree->son);
+		printTree(tree->brother);
 		printf("%i", tree->dado);
 	}
 	printf(")");
 }
 
-int main (){
-	arv *tree;
-	tree = arv_criarvazia();
-	tree = arv_criar(1,
-			arv_criar(2,
-				arv_criarvazia(),
-				arv_criar(3, arv_criarvazia(), arv_criarvazia())
-			),
-			arv_criar(4,
-				arv_criar(5, arv_criarvazia(), arv_criarvazia()),
-				arv_criar(6, arv_criarvazia(), arv_criarvazia())
-			)
-		);
-	arv_print(tree);
+int main ()
+{
+	Tree *arv;
+	arv = mkTreeEmpyt();
+	arv = makeTree(4, mkTreeEmpyt(), mkTreeEmpyt());
+	addSon(5, arv);
+	addSon(6, arv);
+	printTree(arv);
 }
