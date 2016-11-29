@@ -120,15 +120,90 @@ void editTree (Tree* arv)
 	}
 }
 
+int calcularGrau(Tree *arv)
+{	
+	int grau = 0;
+	arv = arv->son;
+	while (arv !=  NULL){
+		grau++;
+		arv= arv->brother;
+	}
+	return grau;
+}
+
+//Calcula o parenstesco, se o segundo é descendente do primeiro
+//ou, se o primeiro é ancestral do segundo.
+int parentesco(Tree* ancestral, int descendente)
+{
+	Tree* herdeiro = ancestral->son;
+	while (herdeiro != NULL)
+	{
+		if (herdeiro->dado == descendente)
+			return 1;
+		else
+			parentesco(herdeiro, descendente);
+		herdeiro = herdeiro->brother;
+	}
+	return 0;
+}
+
+int folhaOuInterior(Tree* arv, int dado)
+{
+	Tree* filho = arv->son;	
+	while (filho != NULL)
+	{
+		if ((filho->dado == dado) && (filho->son == NULL))
+			return 1;
+		else
+			folhaOuInterior(filho, dado);
+		filho = filho->brother;
+	}
+	return 0;
+}
+
+/*
+int alcanca(Tree* arv, int dado, int dado2, int cont)
+{	
+	while (arv != NULL)
+	{
+		if ()
+	}
+}
+*/
+
 // Principal
 int main ()
 {
+	int parente = -1;
+	int grau = -1;
+	int folha = -1;
 	Tree *arv;
+
 	arv = mkTreeEmpyt();
 	arv = makeTree(4, mkTreeEmpyt(), mkTreeEmpyt());
 	addSon(5, arv);
 	addSon(6, arv);
 	printTree(arv);
 	printf("\n");
-	editTree(arv);
+//	editTree(arv);
+	grau = calcularGrau(arv);
+	printf("\n%i\n", grau);
+	parente =  parentesco(arv, 5);
+	if (parente)
+		printf("É descendente\n");
+	else
+		printf("Não é descendente\n");
+	
+	if (parente)
+		printf("É ancestral\n");
+	else
+		printf("Não é ancestral\n");
+	
+	folha = folhaOuInterior(arv, 5);
+
+	if (folha)
+		printf("É folha\n");
+	else
+		printf("É interior\n");
+	
 }
