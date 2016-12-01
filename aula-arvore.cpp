@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 // Estrutura com os ponteiros: son, para o primeiro filho,
-// e brother, para um irmão de um determinado nó
+// e brother, para um irmão de um determinado nó.
 typedef struct BodyTree
 {
 	int dado;
@@ -15,13 +15,13 @@ typedef struct BodyTree
 	struct BodyTree *brother;
 }Tree;
 
-// Teste de árvore vazia
+// Teste de árvore vazia.
 int treeEmpyt(Tree *arv)
 {
 	return arv == NULL;
 }
 
-//Cria árvore
+//Cria árvore, recebendo as sub-árvores.
 Tree* makeTree(int dado, Tree *son, Tree *brother)
 {
 	Tree *arv = (Tree*)malloc(sizeof(Tree));
@@ -31,13 +31,13 @@ Tree* makeTree(int dado, Tree *son, Tree *brother)
 	return arv;
 }
 
-//Cria árvores vazias
+//Cria árvores vazias.
 Tree* mkTreeEmpyt()
 {
 	return NULL;
 }
 
-// Adiciona nó irmão através de recursividade
+// Adiciona nó irmão através de recursividade.
 void addBrother (int dado, Tree* arvSibling)
 {
 	if (treeEmpyt(arvSibling->brother))
@@ -46,7 +46,7 @@ void addBrother (int dado, Tree* arvSibling)
 		addBrother(dado, arvSibling->brother);
 }
 
-// Adiciona nó filho, diretamente, ou através do irmão do filho
+// Adiciona nó filho, diretamente, ou através do irmão do filho.
 void  addSon(int dado, Tree *arv)
 {
 	Tree *carv = NULL;
@@ -60,19 +60,20 @@ void  addSon(int dado, Tree *arv)
 	}
 }
 
-// Mostra árvore com parênteses balanceados
+// Mostra árvore com parênteses balanceados.
 void printTree (Tree *arv)
 {
 	printf("(");
-	if (!treeEmpyt(tree))
+	if (!treeEmpyt(arv))
 	{
-		printTree(tree->son);
-		printf("%i", tree->dado);
-		printTree(tree->brother);
+		printTree(arv->son);
+		printf("%i", arv->dado);
+		printTree(arv->brother);
 	}
 	printf(")");
 }
 
+//Edita a árvore existente, caminhando pelos nós.
 void editTree (Tree* arv)
 {
 	int op = -1;
@@ -109,6 +110,7 @@ void editTree (Tree* arv)
 	}
 }
 
+//Calcula o grau de um determinado nó.
 int calcularGrau(Tree *arv)
 {	
 	int grau = 0;
@@ -136,6 +138,7 @@ int parentesco(Tree* ancestral, int descendente)
 	return 0;
 }
 
+//Determina se um nó é folha ou interior.
 int folhaOuInterior(Tree* arv, int dado)
 {
 	Tree* filho = arv->son;	
@@ -149,16 +152,6 @@ int folhaOuInterior(Tree* arv, int dado)
 	}
 	return 0;
 }
-
-/*
-int alcanca(Tree* arv, int dado, int dado2, int cont)
-{	
-	while (arv != NULL)
-	{
-		if ()
-	}
-}
-*/
 
 // Principal
 int main ()
