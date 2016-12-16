@@ -5,7 +5,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
+int quantidadeNos = 0;
 // Estrutura com os ponteiros: son, para o primeiro filho,
 // e brother, para um irmão de um determinado nó
 typedef struct BodyTree
@@ -68,6 +70,7 @@ void printTree (Tree *tree)
 	{
 		printTree(tree->son);
 		printf("%i", tree->dado);
+		quantidadeNos++;
 		printTree(tree->brother);
 	}
 	printf(")");
@@ -161,15 +164,17 @@ int folhaOuInterior(Tree* arv, int dado)
 	return 0;
 }
 
-/*
+
 int alcanca(Tree* arv, int dado, int dado2, int cont)
 {	
-	while (arv != NULL)
-	{
-		if ()
-	}
+	<F7>
 }
-*/
+
+
+double calculaAlturaMin(Tree* arv)
+{	
+	return (1 + log(quantidadeNos));
+}
 
 // Principal
 int main ()
@@ -177,6 +182,7 @@ int main ()
 	int parente = -1;
 	int grau = -1;
 	int folha = -1;
+	int alturaMin = 0;
 	Tree *arv;
 
 	arv = mkTreeEmpyt();
@@ -205,5 +211,7 @@ int main ()
 		printf("É folha\n");
 	else
 		printf("É interior\n");
-	
+	printf("%i\n", quantidadeNos);
+	alturaMin = calculaAlturaMin(arv);
+	printf("%i\n", alturaMin);
 }
