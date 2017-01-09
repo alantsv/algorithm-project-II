@@ -1,7 +1,7 @@
-def suma (freq, i, j):
+def sum (freq, i, j):
 	s = 0
 	for k in list(range(i,j+1)):
-		s += freq[k]
+		s = s + freq[k]
 	return s
 
 def optimalSearchTree(keys, freq, n):
@@ -21,20 +21,12 @@ def optimalSearchTree(keys, freq, n):
 				if r < j:
 					c = c + cost[(r+1,j)]
 				
-				c = c + suma(freq, i, j)
+				c = c + sum(freq, i, j)
 
 				if (c < cost[(i,j)]):
 					cost[(i,j)] = c
 	return cost[(0, n-1)]
 
-
-def constructOBST (dict())
-	p = BinSearchTree()
-	if i == j:
-		p = None
-	else:
-		p = BinSearchTree()
-		p.key = 
 
 
 keys = [10,12,20]
